@@ -16,11 +16,11 @@ VAGRANTFILE_API_VERSION = "2"
 ## 20150911
 ## Modified to be used outside
 ## of RACATTACK
-## 
+##
 #############################
 #### BEGIN CUSTOMIZATION ####
 #############################
-path_to_vagrant_insec_key = /home/miksan/.vagrant.d/insecure_private_key
+path_to_vagrant_insec_key = "/home/miksan/.vagrant.d/insecure_private_key"
 #define number of nodes
 num_APPLICATION       = 0
 num_LEAF_INSTANCES    = 0
@@ -40,11 +40,11 @@ num_CORE              = 2
 memory_APPLICATION    = 1500
 memory_LEAF_INSTANCES = 2300
 memory_DB_INSTANCES   = 4096
-#        
+#
 #size of shared disk in GB
 size_shared_disk      = 4
 #number of shared disks
-count_shared_disk     = 6
+count_shared_disk     = 7
 #
 #############################
 ##### END CUSTOMIZATION #####
@@ -101,8 +101,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.ssh.insert_key = false
-  config.vm.box = "oravirt/ol65"
- 
+  config.vm.box = "oravirt/ol67"
+
 
   ## Virtualbox modifications
   ## we first setup memory and cpu
@@ -187,14 +187,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--memory", memory_DB_INSTANCES]
         vb.customize ["modifyvm", :id, "--cpus", num_CORE]
         vb.customize ["modifyvm", :id, "--groups", "/vbox-rac"]
-        vb.customize ['createhd', '--filename', "#{vm_name}-extra-disk1.vdi", '--size', (50 * 1024).floor, '--variant', 'standard']
+        unless File.exist?("#{vm_name}-extra-disk1.vdi")
+          vb.customize ['createhd', '--filename', "#{vm_name}-extra-disk1.vdi", '--size', (50 * 1024).floor, '--variant', 'standard']
+        end
         vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', "#{vm_name}-extra-disk1.vdi"]
         #first shared disk port
         port=2
         #how many shared disk
         (1..count_shared_disk).each do |disk|
           file_to_dbdisk = "vbox-rac-shared-disk"
-          if !File.exist?("#{file_to_dbdisk}#{disk}.vdi")
+          if !File.exist?("#{file_to_dbdisk}#{disk}.vdi") and num_DB_INSTANCES==i
             unless give_info==false
               puts "on first boot shared disks will be created, this will take some time"
               give_info=false
@@ -209,11 +211,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.vm.network :private_network, ip: lanip
       config.vm.network :private_network, ip: privip
       if not ENV['setup'] == "clean"
-        if vm_name == "dbnode1" 
+        if vm_name == "dbnode1"
           puts vm_name + " dns server role is master"
           config.vm.provision :shell, :inline => "sh /media/stagefiles/named_master.sh"
         end
-        if vm_name == "dbnode2" 
+        if vm_name == "dbnode2"
           puts vm_name + " dns server role is slave"
           config.vm.provision :shell, :inline => "sh /media/stagefiles/named_slave.sh"
         end

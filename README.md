@@ -50,7 +50,7 @@ For more detail on how the vagrant part of this project works, look at [this](ht
 
 ### Modifying the Oracle installation (Ansible style)
 
-If you want to install a different version of GI , edit the `extra-provision/ansible-oracle/group_vars/vbox-si-asm` file and change the parameter `oracle_install_option_gi` to either of:
+If you want to install a different version of GI , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the parameter `oracle_install_option_gi` to either of:
 
 * `12.2.0.1`
 * `12.1.0.2`
@@ -58,7 +58,7 @@ If you want to install a different version of GI , edit the `extra-provision/ans
 * `11.2.0.4`
 * `11.2.0.3`
 
-If you want to install a different version of the database , edit the `extra-provision/ansible-oracle/group_vars/vbox-si-asm` file and change the following:
+If you want to install a different version of the database , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the following:
 
 Under `oracle_databases`, change the parameter `oracle_version_db:` to one of the following:
 
@@ -73,7 +73,7 @@ If you want to change other parameters they're all under `oracle_databases`.
 
 ### Adding more ORACLE_HOMES, or databases to an existing home
 
-If you want to install more than 1 ORACLE_HOME (using different version etc), just uncomment the part that is commented in `extra-provision/ansible-oracle/group_vars/vbox-si-asm`.
+If you want to install more than 1 ORACLE_HOME (using different version etc), just uncomment the part that is commented in `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2`.
 
 It is also possible to add more homes & databases than those already configured.
 

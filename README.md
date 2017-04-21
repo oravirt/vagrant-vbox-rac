@@ -40,7 +40,7 @@ This will (by default):
 - sys/system passwords are Oracle123
 - The diskgroups are called `crs, data & fra` and uses `asmlib` for device naming persistency.
 
-**NOTE: The default config will consume ~60GB of storage. 40GB of this is to accomodate the GIMR database in 12.2. If you want to install a different version, you can just change the size of the `crs` disk to something smaller**
+**NOTE: The default config will consume ~60GB of storage. 40GB of this is to accomodate the GIMR database in 12.2. If you want to install a different version, you can just change the size of the `crs` disk in `hosts.yml` to something smaller**
 
 If you just want to create the machine, and not run the provisioning step run this:
 

@@ -1,0 +1,3 @@
+[submodule "extra-provision/ansible-oracle"]
+	path = extra-provision/ansible-oracle
+	url = https://github.com/oravirt/ansible-oracle

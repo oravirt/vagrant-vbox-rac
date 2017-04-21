@@ -1,0 +1,5 @@
+inventory
+*.retry
+swrepo/*.zip
+*.vdi
+.vagrant/*

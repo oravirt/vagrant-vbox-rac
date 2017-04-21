@@ -25,6 +25,20 @@ require "json"
 # Read YAML file with VM configuration
 servers = YAML.load_file('hosts.yml')
 
+# Do some initial variable checks
+servers.each do |c|
+  if c['domain'].nil?
+    puts "'domain:' is not set in hosts.yml"
+    puts "exiting"
+    exit 1
+  end
+  if c['hostgroup'].nil?
+    puts "'hostgroup:' is not set in hosts.yml"
+    puts "exiting"
+    exit 1
+  end
+end
+
 # Create inventory file for Ansible by reading the hosts.yml
 f = File.open("inventory","w")
 servers.each do |vm|

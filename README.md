@@ -84,7 +84,7 @@ After you've done the changes, run `vagrant provision` again, and it will instal
 
 You have the possibility to override some of the defaults using environment variables, as described in more detail [here](https://github.com/oravirt/vagrantfile#environment-variables-that-can-be-used-to-override-defaults).
 
-But it is basically a simple matter of setting `provisioning_env_override: true` ìn `hosts.yml`, and then e.g:
+But it is basically a simple matter of setting `provisioning_env_override: true` in `hosts.yml`, and then e.g:
 
 `setup=true giver=12.1.0.2 dbver=12.1.0.2 dbtype=RAC dbstorage=ASM vagrant up`
 

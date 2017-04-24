@@ -101,7 +101,7 @@ For each database created there is a `/home/oracle/.profile_<dbname>` created wh
 
 To install more than 1 cluster, just comment out the commented part in `hosts.yml` (called `vbox-rac-dc2`). Since the Vagrant provisioner works on 1 hostgroup at the time, it will first create the `vbox-rac-dc1` cluster, and then move on the `vbox-rac-dc2`. This will take ~2H
 
-It is possible to just create the machines (just `vagrant up`) and then run Ansible as a separate step manually. I have not tested this, so not sure how long this will take though.
+It is possible to just create the machines (just `vagrant up`) and then run Ansible as a separate step manually. Doing it this way cut the runtime down to ~80min (on the same hardware)
 
 ### These are the Oracle binaries that should be used.
 

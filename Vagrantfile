@@ -88,6 +88,7 @@ servers.each_with_index do |vm,index|
         check = index+num_vms
         hostname = "#{vm['basename_vm']}#{v}"
         hostgroup = "#{vm['hostgroup']}"
+        base_disk_path = "#{vm['base_disk_path']}" unless vm['base_disk_path'].nil?
         domain = "#{vm['domain']}"
         provisioning = vm['provisioning'] unless vm['provisioning'].nil?
         provisioning_env_override = vm['provisioning_env_override'] unless vm['provisioning_env_override'].nil?
@@ -108,13 +109,15 @@ servers.each_with_index do |vm,index|
               vb.cpus = vm["cpu"]
               vb.customize ["modifyvm", :id, "--groups", "/#{hostgroup}"] unless vm["hostgroup"].nil?
               if vm['create_local_disk']
+                  FileUtils.mkdir_p "#{base_disk_path}/#{hostgroup}" unless vm['base_disk_path'].nil?
                   portnum = 0
                   vm['local_disks'].each do |disk|
                   d = 0
                   while d < disk['count']
                        d += 1
                        portnum += 1
-                       local_disk_name = "#{vm['basename_vm']}#{v}-#{disk['name']}-#{d}.vdi"
+                       local_disk_name = "#{base_disk_path}/#{hostgroup}/#{vm['basename_vm']}#{v}-#{disk['name']}-#{d}.vdi" if vm["base_disk_path"]
+                       local_disk_name = "#{vm['basename_vm']}#{v}-#{disk['name']}-#{d}.vdi" if not vm["base_disk_path"]
                        size = disk['size']
                        if !File.exist?(local_disk_name)
                          vb.customize ['createhd', '--filename', "#{local_disk_name}", '--variant', 'standard', '--size', size * 1024]
@@ -131,7 +134,8 @@ servers.each_with_index do |vm,index|
                   while d < disk['count']
                        d += 1
                        portnum += 1
-                       shared_disk_name = "#{vm['hostgroup']}-shared-#{disk['name']}-#{d}.vdi"
+                       shared_disk_name = "#{base_disk_path}/#{hostgroup}/#{vm['hostgroup']}-shared-#{disk['name']}-#{d}.vdi" if vm["base_disk_path"]
+                       shared_disk_name = "#{vm['hostgroup']}-shared-#{disk['name']}-#{d}.vdi" if not vm["base_disk_path"]
                        size = disk['size']
                        if !File.exist?(shared_disk_name) and check == v  # Only create the disk as the first VM is created
                          vb.customize ['createhd', '--filename', "#{shared_disk_name}", '--variant', 'fixed', '--size', size * 1024]

@@ -22,6 +22,7 @@ Edit the `hosts.yml` file if you want to change the ip, number of cpu's, amount 
 
 If you want to use a different version or Oracle Linux, change the parameter `box: oravirt/ol73` to one of the following:
 
+- `oravirt/ol74`
 - `oravirt/ol72`
 - `oravirt/ol68`
 - `oravirt/ol67`

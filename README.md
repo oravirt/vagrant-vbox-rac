@@ -22,6 +22,7 @@ Edit the `hosts.yml` file if you want to change the ip, number of cpu's, amount 
 
 If you want to use a different version or Oracle Linux, change the parameter `box: oravirt/ol73` to one of the following:
 
+- `oravirt/ol74`
 - `oravirt/ol72`
 - `oravirt/ol68`
 - `oravirt/ol67`
@@ -50,7 +51,7 @@ For more detail on how the vagrant part of this project works, look at [this](ht
 
 ### Modifying the Oracle installation (Ansible style)
 
-If you want to install a different version of GI , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the parameter `oracle_install_option_gi` to either of:
+If you want to install a different version of GI , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the parameter `oracle_install_version_gi` to either of:
 
 * `12.2.0.1`
 * `12.1.0.2`

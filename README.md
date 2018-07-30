@@ -20,13 +20,17 @@ Clone this repository:
 
 Edit the `hosts.yml` file if you want to change the ip, number of cpu's, amount of RAM etc.
 
-If you want to use a different version or Oracle Linux, change the parameter `box: oravirt/ol73` to one of the following:
+If you want to use a different version or Oracle Linux (or use RHEL), change the parameter `box: oravirt/ol75` to one of the following:
 
 - `oravirt/ol74`
+- `oravirt/ol73`
 - `oravirt/ol72`
+- `oravirt/ol69`
 - `oravirt/ol68`
 - `oravirt/ol67`
 - `oravirt/ol65`
+- `oravirt/rhel75`
+- `oravirt/rhel610`
 
 These boxes are prepared with all Oracle pre-req packages installed
 
@@ -35,13 +39,13 @@ Download the Oracle binaries (see below) and place them in the `swrepo` director
 And then: `setup=true vagrant up`
 
 This will (by default):
-- create 2 VM's based on Oracle Linux 7.3
-- create a 12.2 container database called 'orclcdb'
+- create 2 VM's based on Oracle Linux 7.5
+- create a 18.3 container database called 'orclcdb'
 - create a pdb called 'orclpdb'
-- sys/system passwords are Oracle123
+- sys/system passwords are Oracle_123
 - The diskgroups are called `crs, data & fra` and uses `asmlib` for device naming persistency.
 
-**NOTE: The default config will consume ~60GB of storage. 40GB of this is to accomodate the GIMR database in 12.2. If you want to install a different version, you can just change the size of the `crs` disk in `hosts.yml` to something smaller**
+**NOTE: The default config will consume ~74GB of storage. 40GB of this is to accomodate the GIMR database in 18.3. If you want to install a different version, you can just change the size of the `crs` disk in `hosts.yml` to something smaller**
 
 If you just want to create the machine, and not run the provisioning step run this:
 
@@ -49,20 +53,27 @@ If you just want to create the machine, and not run the provisioning step run th
 
 For more detail on how the vagrant part of this project works, look at [this](https://github.com/oravirt/vagrantfile)
 
-### Modifying the Oracle installation (Ansible style)
+### Modifying the Oracle installation, GI (Ansible style)
 
 If you want to install a different version of GI , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the parameter `oracle_install_version_gi` to either of:
 
+* `18.3.0.0`
 * `12.2.0.1`
 * `12.1.0.2`
 * `12.1.0.1`
 * `11.2.0.4`
 * `11.2.0.3`
 
-If you want to install a different version of the database , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the following:
+
+
+### Modifying the Oracle installation, DB (Ansible style)
+
+* THIS SECTION NEEDS TO BE RE-WRITTEN AS IT IS NO LONGER CORRECT. USE ENVIRONMENT VARIABLES FOR NOW.
+<!-- If you want to install a different version of the database , edit the `extra-provision/ansible-oracle/group_vars/vbox-rac-dc1/2` file and change the following:
 
 Under `oracle_databases`, change the parameter `oracle_version_db:` to one of the following:
 
+* `18.3.0.0`
 * `12.2.0.1`
 * `12.1.0.2`
 * `12.1.0.1`
@@ -79,7 +90,7 @@ If you want to install more than 1 ORACLE_HOME (using different version etc), ju
 It is also possible to add more homes & databases than those already configured.
 
 
-After you've done the changes, run `vagrant provision` again, and it will install the new home and/or create the database.
+After you've done the changes, run `vagrant provision` again, and it will install the new home and/or create the database. -->
 
 ### Modifying the Oracle installation (using environment variables)
 
@@ -87,7 +98,7 @@ You have the possibility to override some of the defaults using environment vari
 
 But it is basically a simple matter of setting `provisioning_env_override: true` in `hosts.yml`, and then e.g:
 
-`setup=true giver=12.1.0.2 dbver=12.1.0.2 dbtype=RAC dbstorage=ASM vagrant up`
+`setup=true giver=12.1.0. dbver=12.1.0.2 dbtype=RAC dbstorage=ASM vagrant up`
 
 ### Logging in to the VM(s)
 
@@ -105,6 +116,12 @@ To install more than 1 cluster, just comment out the commented part in `hosts.ym
 It is possible to just create the machines (just `vagrant up`) and then run Ansible as a separate step manually. Doing it this way cut the runtime down to ~80min (on the same hardware)
 
 ### These are the Oracle binaries that should be used.
+
+For 18.3.0.0:
+```
+    LINUX.X64_180000_db_home.zip
+    LINUX.X64_180000_grid_home.zip
+ ```
 
 For 12.2.0.1:
 ```

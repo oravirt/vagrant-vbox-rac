@@ -179,8 +179,8 @@ servers.each_with_index do |vm,index|
                   ansible.extra_vars = {
                    oracle_scan: "#{hostgroup}.#{domain}",
                    oracle_install_version_gi: "#{GIVER}",
-                   apply_patches_gi: "#{APPLY_PATCHES_GI}",
-                   apply_patches_db: "#{APPLY_PATCHES_DB}",
+                   # apply_patches_gi: "#{APPLY_PATCHES_GI}",
+                   # apply_patches_db: "#{APPLY_PATCHES_DB}",
                    db_homes_config: {"db1":{
                    home: "db1",
                    version: "#{DBVER}",

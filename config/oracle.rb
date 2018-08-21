@@ -90,16 +90,16 @@ if ENV['flashback']
 else
  FLASHBACK = "false"
 end
-if ENV['apply_patches_gi']
- APPLY_PATCHES_GI = ENV['apply_patches_gi']
-else
- APPLY_PATCHES_GI = "false"
-end
-if ENV['apply_patches_db']
- APPLY_PATCHES_DB = ENV['apply_patches_db']
-else
- APPLY_PATCHES_DB = "false"
-end
+# if ENV['apply_patches_gi']
+#  APPLY_PATCHES_GI = ENV['apply_patches_gi']
+# else
+#  APPLY_PATCHES_GI = "false"
+# end
+# if ENV['apply_patches_db']
+#  APPLY_PATCHES_DB = ENV['apply_patches_db']
+# else
+#  APPLY_PATCHES_DB = "false"
+# end
 
 if VALID_VERSIONS.include? DBVER
 else

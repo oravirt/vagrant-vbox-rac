@@ -18,6 +18,10 @@ Clone this repository:
 
 `cd vagrant-vbox-rac`
 
+Update the submodules:
+
+`./update-repo.sh`
+
 Edit the `hosts.yml` file if you want to change the ip, number of cpu's, amount of RAM etc.
 
 If you want to use a different version or Oracle Linux (or use RHEL), change the parameter `box: oravirt/ol75` to one of the following:
@@ -98,7 +102,7 @@ You have the possibility to override some of the defaults using environment vari
 
 But it is basically a simple matter of setting `provisioning_env_override: true` in `hosts.yml`, and then e.g:
 
-`setup=true giver=12.1.0. dbver=12.1.0.2 dbtype=RAC dbstorage=ASM vagrant up`
+`setup=true giver=12.2.0.1 dbver=12.1.0.2 dbtype=RAC dbstorage=ASM vagrant up`
 
 ### Logging in to the VM(s)
 

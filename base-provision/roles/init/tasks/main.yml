@@ -7,7 +7,7 @@
   tags: ntp
 
 - name: Make sure ntp is running
-  service: name=ntpd state=running
+  service: name=ntpd state=started
   tags: ntp
 
 - name: Generate /etc/hosts
